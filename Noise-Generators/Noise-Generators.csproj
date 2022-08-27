@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<RootNamespace>Noise_Generators</RootNamespace>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+
+		<Authors>Christoph Duzy</Authors>
+		<Product>Noise-Generators</Product>
+		<Description>White, value and perlin noise generator.</Description>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/duzychri/Noise-Generators</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<VersionPrefix>1.0.0</VersionPrefix>
+		<PackageId>Noise-Generators</PackageId>
+	</PropertyGroup>
+
+</Project>
