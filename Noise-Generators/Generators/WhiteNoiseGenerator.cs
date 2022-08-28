@@ -20,7 +20,7 @@ public class WhiteNoiseGenerator : INoiseGenerator
     /// Generates the noise at the specified <paramref name="position"/>.
     /// </summary>
     /// <param name="position">The position to get the noise at.</param>
-    /// <returns>The noise at the specified <paramref name="position"/>.</returns>
+    /// <returns>The noise at the specified position in the range [0, 1].</returns>
     public double GenerateNoise(double position)
     {
         return rng.GetRandomDouble(position);
@@ -31,10 +31,10 @@ public class WhiteNoiseGenerator : INoiseGenerator
     /// </summary>
     /// <param name="positionX">The position on the x-axis to get the noise at.</param>
     /// <param name="positionY">The position on the x-axis to get the noise at.</param>
-    /// <returns>The noise at the specified position.</returns>
+    /// <returns>The noise at the specified position in the range [0, 1].</returns>
     public double GenerateNoise(double positionX, double positionY)
     {
         double2 position = new double2(positionX, positionY);
-        return rng.GetRandomFloat(position);
+        return rng.GetRandomDouble(position);
     }
 }

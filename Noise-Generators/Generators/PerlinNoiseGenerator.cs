@@ -3,7 +3,7 @@
 /// <summary>
 /// A perlin noise generator.
 /// </summary>
-public class PerlinNoiseGenerator : INoiseGenerator
+public class PerlinNoiseGenerator : INoiseGenerator, ICoherentNoiseGenerator
 {
     private readonly double maxSize1d;
     private readonly double maxSize2d;
@@ -33,7 +33,23 @@ public class PerlinNoiseGenerator : INoiseGenerator
     /// <returns>The noise at the specified <paramref name="position"/>.</returns>
     public double GenerateNoise(double position)
     {
-        position *= cellCount.x;
+        return GenerateCoherentNoise(position, cellCount.x);
+    }
+
+    /// <summary>
+    /// Generates the noise at the specified position.
+    /// </summary>
+    /// <param name="positionX">The position on the x-axis to get the noise at.</param>
+    /// <param name="positionY">The position on the x-axis to get the noise at.</param>
+    /// <returns>The noise at the specified position in the range [0, 1].</returns>
+    public double GenerateNoise(double positionX, double positionY)
+    {
+        return GenerateCoherentNoise(positionX, positionY, cellCount.x, cellCount.y);
+    }
+
+    public double GenerateCoherentNoise(double position, double frequency)
+    {
+        position *= frequency;
 
         double cellIndex = Floor(position);
         double cellPosition = Fract(position);
@@ -41,8 +57,8 @@ public class PerlinNoiseGenerator : INoiseGenerator
         double leftCellIndex = cellIndex + 0;
         double rightCellIndex = cellIndex + 1;
 
-        double leftCellValue = rng.GetRandomFloat(leftCellIndex, -1, 1);
-        double rightCellValue = rng.GetRandomFloat(rightCellIndex, -1, 1);
+        double leftCellValue = rng.GetRandomDouble(leftCellIndex, -1, 1);
+        double rightCellValue = rng.GetRandomDouble(rightCellIndex, -1, 1);
 
         double leftCellLinePoint = leftCellValue * cellPosition;
         double rightCellLinePoint = rightCellValue * (cellPosition - 1);
@@ -52,16 +68,10 @@ public class PerlinNoiseGenerator : INoiseGenerator
         return value;
     }
 
-    /// <summary>
-    /// Generates the noise at the specified position.
-    /// </summary>
-    /// <param name="positionX">The position on the x-axis to get the noise at.</param>
-    /// <param name="positionY">The position on the x-axis to get the noise at.</param>
-    /// <returns>The noise at the specified position.</returns>
-    public double GenerateNoise(double positionX, double positionY)
+    public double GenerateCoherentNoise(double positionX, double positionY, double frequencyX, double frequencyY)
     {
         double2 position = new double2(positionX, positionY);
-        position *= cellCount;
+        position *= new double2(frequencyX, frequencyY);
 
         double2 cellIndex = Floor(position);
         double2 cellPosition = Fract(position);
@@ -71,10 +81,10 @@ public class PerlinNoiseGenerator : INoiseGenerator
         double2 bottomLeftCellIndex = cellIndex + new double2(0, 0);
         double2 bottomRightCellIndex = cellIndex + new double2(1, 0);
 
-        double2 topLeftCellDirection = rng.GetRandomFloat2(topLeftCellIndex, new double2(-1, -1), new double2(1, 1));
-        double2 topRightCellDirection = rng.GetRandomFloat2(topRightCellIndex, new double2(-1, -1), new double2(1, 1));
-        double2 bottomLeftCellDirection = rng.GetRandomFloat2(bottomLeftCellIndex, new double2(-1, -1), new double2(1, 1));
-        double2 bottomRightCellDirection = rng.GetRandomFloat2(bottomRightCellIndex, new double2(-1, -1), new double2(1, 1));
+        double2 topLeftCellDirection = rng.GetRandomDouble2(topLeftCellIndex, new double2(-1, -1), new double2(1, 1));
+        double2 topRightCellDirection = rng.GetRandomDouble2(topRightCellIndex, new double2(-1, -1), new double2(1, 1));
+        double2 bottomLeftCellDirection = rng.GetRandomDouble2(bottomLeftCellIndex, new double2(-1, -1), new double2(1, 1));
+        double2 bottomRightCellDirection = rng.GetRandomDouble2(bottomRightCellIndex, new double2(-1, -1), new double2(1, 1));
 
         double topLeftCellValue = Dot(topLeftCellDirection, cellPosition - new double2(0, 1));
         double topRightCellValue = Dot(topRightCellDirection, cellPosition - new double2(1, 1));

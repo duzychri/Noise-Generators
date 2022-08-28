@@ -24,26 +24,26 @@ internal class RandomNumberGenerator
         return GetInternalRandomDouble(value, floatMutator, 0f, 1f);
     }
 
-    public double GetRandomFloat(double value, double min, double max)
+    public double GetRandomDouble(double value, double min, double max)
     {
         return GetInternalRandomDouble(value, floatMutator, min, max);
     }
 
-    public double GetRandomFloat(double2 position)
+    public double GetRandomDouble(double2 position)
     {
-        return GetInternalRandomFloat(position, float2Mutator, 0f, 1f);
+        return GetInternalRandomDouble(position, float2Mutator, 0f, 1f);
     }
 
-    public double GetRandomFloat(double2 position, double min, double max)
+    public double GetRandomDouble(double2 position, double min, double max)
     {
-        return GetInternalRandomFloat(position, float2Mutator, min, max);
+        return GetInternalRandomDouble(position, float2Mutator, min, max);
     }
 
     #endregion Random Methods
 
     #region Double2 Methods
 
-    public double2 GetRandomFloat2(double position)
+    public double2 GetRandomDouble2(double position)
     {
         return new double2(
             GetInternalRandomDouble(position, floatMutator + 13451.33546f, 0f, 1f),
@@ -51,7 +51,7 @@ internal class RandomNumberGenerator
         );
     }
 
-    public double2 GetRandomFloat2(double position, double min, double max)
+    public double2 GetRandomDouble2(double position, double min, double max)
     {
         return new double2(
             GetInternalRandomDouble(position, floatMutator + 26882.13293f, min, max),
@@ -59,19 +59,19 @@ internal class RandomNumberGenerator
         );
     }
 
-    public double2 GetRandomFloat2(double2 position)
+    public double2 GetRandomDouble2(double2 position)
     {
         return new double2(
-            GetInternalRandomFloat(position, float2Mutator + new double2(342351.13835f, 33459.34866f), 0f, 1f),
-            GetInternalRandomFloat(position, float2Mutator + new double2(723458.23873f, 23553.92489f), 0f, 1f)
+            GetInternalRandomDouble(position, float2Mutator + new double2(342351.13835f, 33459.34866f), 0f, 1f),
+            GetInternalRandomDouble(position, float2Mutator + new double2(723458.23873f, 23553.92489f), 0f, 1f)
         );
     }
 
-    public double2 GetRandomFloat2(double2 position, double2 min, double2 max)
+    public double2 GetRandomDouble2(double2 position, double2 min, double2 max)
     {
         return new double2(
-            GetInternalRandomFloat(position, float2Mutator + new double2(10623.98909f, 78634.23373f), min.x, max.x),
-            GetInternalRandomFloat(position, float2Mutator + new double2(32379.33946f, 82344.14535f), min.y, max.y)
+            GetInternalRandomDouble(position, float2Mutator + new double2(10623.98909f, 78634.23373f), min.x, max.x),
+            GetInternalRandomDouble(position, float2Mutator + new double2(32379.33946f, 82344.14535f), min.y, max.y)
         );
     }
 
@@ -95,7 +95,7 @@ internal class RandomNumberGenerator
         return value;
     }
 
-    private double GetInternalRandomFloat(double2 value, double2 mutator, double min, double max)
+    private double GetInternalRandomDouble(double2 value, double2 mutator, double min, double max)
     {
         //// Make value smaller incase of overflows.
         //value = Sin(value);
@@ -103,7 +103,10 @@ internal class RandomNumberGenerator
         if (value.x == 0 && value.y == 0)
         { value += new double2(68454.68835f, 33749.34356f); }
         // Randomize value based on mutator.
-        double random = Fract(Sin(Dot(value, mutator)) * 9761.8642f);
+        double random = Dot(value, mutator);
+        random = Sin(random);
+        random = random * 9761.8642f;
+        random = Fract(random);
         // Make sure the value is not negative.
         random = Abs(random);
         // Clamp value to the min and max.
@@ -112,7 +115,7 @@ internal class RandomNumberGenerator
         return random;
     }
 
-    private double GetInternalRandomFloat(double3 value, double3 mutator, double min, double max)
+    private double GetInternalRandomDouble(double3 value, double3 mutator, double min, double max)
     {
         //// Make value smaller incase of overflows.
         //value = Sin(value);

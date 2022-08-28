@@ -24,10 +24,26 @@ public class ValueNoiseGenerator : INoiseGenerator
     /// Generates the noise at the specified <paramref name="position"/>.
     /// </summary>
     /// <param name="position">The position to get the noise at.</param>
-    /// <returns>The noise at the specified <paramref name="position"/>.</returns>
+    /// <returns>The noise at the specified position in the range [0, 1].</returns>
     public double GenerateNoise(double position)
     {
-        position *= cellCount.x;
+        return GenerateCoherentNoise(position, cellCount.x);
+    }
+
+    /// <summary>
+    /// Generates the noise at the specified position.
+    /// </summary>
+    /// <param name="positionX">The position on the x-axis to get the noise at.</param>
+    /// <param name="positionY">The position on the x-axis to get the noise at.</param>
+    /// <returns>The noise at the specified position in the range [0, 1].</returns>
+    public double GenerateNoise(double positionX, double positionY)
+    {
+        return GenerateCoherentNoise(positionX, positionY, cellCount.x, cellCount.y);
+    }
+
+    public double GenerateCoherentNoise(double position, double frequency)
+    {
+        position *= frequency;
 
         double cellIndex = Floor(position);
         double cellPosition = Fract(position);
@@ -42,16 +58,10 @@ public class ValueNoiseGenerator : INoiseGenerator
         return value;
     }
 
-    /// <summary>
-    /// Generates the noise at the specified position.
-    /// </summary>
-    /// <param name="positionX">The position on the x-axis to get the noise at.</param>
-    /// <param name="positionY">The position on the x-axis to get the noise at.</param>
-    /// <returns>The noise at the specified position.</returns>
-    public double GenerateNoise(double positionX, double positionY)
+    public double GenerateCoherentNoise(double positionX, double positionY, double frequencyX, double frequencyY)
     {
         double2 position = new double2(positionX, positionY);
-        position *= cellCount;
+        position *= new double2(frequencyX, frequencyY);
 
         double2 cellIndex = Floor(position);
         double2 cellPosition = Fract(position);
@@ -61,10 +71,10 @@ public class ValueNoiseGenerator : INoiseGenerator
         double2 bottomLeftCellIndex = cellIndex + new double2(0, 0);
         double2 bottomRightCellIndex = cellIndex + new double2(1, 0);
 
-        double topLeftCellValue = rng.GetRandomFloat(topLeftCellIndex);
-        double topRightCellValue = rng.GetRandomFloat(topRightCellIndex);
-        double bottomLeftCellValue = rng.GetRandomFloat(bottomLeftCellIndex);
-        double bottomRightCellValue = rng.GetRandomFloat(bottomRightCellIndex);
+        double topLeftCellValue = rng.GetRandomDouble(topLeftCellIndex);
+        double topRightCellValue = rng.GetRandomDouble(topRightCellIndex);
+        double bottomLeftCellValue = rng.GetRandomDouble(bottomLeftCellIndex);
+        double bottomRightCellValue = rng.GetRandomDouble(bottomRightCellIndex);
 
         double interpolatorX = Ease(cellPosition.x);
         double interpolatorY = Ease(cellPosition.y);
