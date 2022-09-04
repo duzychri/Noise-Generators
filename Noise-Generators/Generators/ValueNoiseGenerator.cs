@@ -41,6 +41,12 @@ public class ValueNoiseGenerator : INoiseGenerator
         return GenerateCoherentNoise(positionX, positionY, cellCount.x, cellCount.y);
     }
 
+    /// <summary>
+    /// Generates the noise at the specified <paramref name="position"/>.
+    /// </summary>
+    /// <param name="position">The position to get the noise at.</param>
+    /// <param name="frequency">The frequency or 'cell count'.</param>
+    /// <returns>The noise at the specified <paramref name="position"/>.</returns>
     public double GenerateCoherentNoise(double position, double frequency)
     {
         position *= frequency;
@@ -58,6 +64,14 @@ public class ValueNoiseGenerator : INoiseGenerator
         return value;
     }
 
+    /// <summary>
+    /// Generates the noise at the specified position.
+    /// </summary>
+    /// <param name="positionX">The position on the x-axis to get the noise at.</param>
+    /// <param name="positionY">The position on the y-axis to get the noise at.</param>
+    /// <param name="frequencyX">The frequency or 'cell count' in the x-axis.</param>
+    /// <param name="frequencyY">The frequency or 'cell count' in the y-axis.</param>
+    /// <returns>The noise at the specified position.</returns>
     public double GenerateCoherentNoise(double positionX, double positionY, double frequencyX, double frequencyY)
     {
         double2 position = new double2(positionX, positionY);
