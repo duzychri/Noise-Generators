@@ -3,7 +3,7 @@
 /// <summary>
 /// A helper for the creation of texture content using the noise generators.
 /// </summary>
-public static class GeneratorHelper
+public static class NoiseGeneratorHelper
 {
     /// <summary>
     /// Generates the content of a one-dimensional texture with the specified <paramref name="width"/>.
@@ -134,4 +134,54 @@ public static class GeneratorHelper
 
         return floatPixels;
     }
+
+    ///// <summary>
+    ///// Generates the content of a one-dimensional texture with the specified <paramref name="width"/>.
+    ///// </summary>
+    ///// <param name="generator">The generator to use.</param>
+    ///// <param name="width">The width of the texture content.</param>
+    ///// <param name="useParallel">Uses the <see cref="Parallel.For(int, int, Action{int})"/> method to parallelize the generation of pixel values.</param>
+    ///// <returns>The content of a one-dimensional texture.</returns>
+    ///// <exception cref="ArgumentNullException">The <paramref name="generator"/> is null.</exception>
+    ///// <exception cref="ArgumentException">The <paramref name="width"/> is smaller or equal to 0.</exception>
+    //public static byte[] GenerateByteTexture(INoiseGenerator generator, int width, bool useParallel = false)
+    //{
+    //    if (generator is null) { throw new ArgumentNullException(nameof(generator)); }
+    //    if (width <= 0) { throw new ArgumentException($"Parameter '{nameof(width)}' needs to be larger than 0.", nameof(width)); }
+
+    //    double[] doublePixels = GenerateDoubleTexture(generator, width, useParallel);
+    //    byte[] bytePixels = doublePixels.Select(p => (byte)(Math.Clamp(0, 1, p) * 255)).ToArray();
+
+    //    return bytePixels;
+    //}
+
+    ///// <summary>
+    ///// Generates the content of a two-dimensional texture with the specified <paramref name="width"/> and <paramref name="height"/>.
+    ///// </summary>
+    ///// <param name="generator">The generator to use.</param>
+    ///// <param name="width">The width of the texture content.</param>
+    ///// <param name="height">The height of the texture content.</param>
+    ///// <param name="useParallel">Uses the <see cref="Parallel.For(int, int, Action{int})"/> method to parallelize the generation of pixel values.</param>
+    ///// <returns>The content of a two-dimensional texture.</returns>
+    ///// <exception cref="ArgumentNullException">The <paramref name="generator"/> is null.</exception>
+    ///// <exception cref="ArgumentException">The <paramref name="width"/> or <paramref name="width"/> is smaller or equal to 0.</exception>
+    //public static byte[,] GenerateByteTexture(INoiseGenerator generator, int width, int height, bool useParallel = false)
+    //{
+    //    if (generator is null) { throw new ArgumentNullException(nameof(generator)); }
+    //    if (width <= 0) { throw new ArgumentException($"Parameter '{nameof(width)}' needs to be larger than 0.", nameof(width)); }
+    //    if (height <= 0) { throw new ArgumentException($"Parameter '{nameof(height)}' needs to be larger than 0.", nameof(height)); }
+
+    //    double[,] doublePixels = GenerateDoubleTexture(generator, width, height, useParallel);
+    //    byte[,] bytePixels = new byte[width, height];
+
+    //    for (int y = 0; y < height; y++)
+    //    {
+    //        for (int x = 0; x < width; x++)
+    //        {
+    //            bytePixels[x, y] = (byte)(Math.Clamp(0, 1, doublePixels[x, y]) * 255);
+    //        }
+    //    }
+
+    //    return bytePixels;
+    //}
 }

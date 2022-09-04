@@ -41,7 +41,7 @@ namespace Test_Forms
         private static void Open1dForm(string name, INoiseGenerator generator)
         {
             const int width = 512;
-            float[] pixels = GeneratorHelper.GenerateFloatTexture(generator, width);
+            float[] pixels = NoiseGeneratorHelper.GenerateFloatTexture(generator, width);
 
             Bitmap image = new Bitmap(width, 512);
 
@@ -61,7 +61,7 @@ namespace Test_Forms
 
         private static void Open2dForm(string name, INoiseGenerator generator)
         {
-            float[,] pixels = GeneratorHelper.GenerateFloatTexture(generator, 512, 512, false);
+            float[,] pixels = NoiseGeneratorHelper.GenerateFloatTexture(generator, 512, 512, false);
             Image image = PixelsToImage(pixels);
             CreateFormWithImage(name, image);
         }
