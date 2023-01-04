@@ -11,7 +11,7 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<RepositoryUrl>https://github.com/duzychri/Noise-Generators</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<VersionPrefix>1.0.2</VersionPrefix>
+		<VersionPrefix>1.0.3</VersionPrefix>
 		<PackageId>Noise-Generators</PackageId>
 	</PropertyGroup>
 

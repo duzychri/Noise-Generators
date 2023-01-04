@@ -21,7 +21,7 @@ namespace Test_Forms
             ValueNoiseGenerator valueNoiseGenerator = new ValueNoiseGenerator(18493.29312f, CellCount, CellCount);
             //Open1dForm("Value Noise", valueNoiseGenerator);
             Open2dForm("Value Noise", valueNoiseGenerator);
-            PerlinNoiseGenerator perlinNoiseGenerator = new PerlinNoiseGenerator(18493.29312f, CellCount, CellCount);
+            PerlinNoiseGenerator perlinNoiseGenerator = new PerlinNoiseGenerator(2342342343.29312f, CellCount, CellCount);
             //Open1dForm("Perlin Noise", perlinNoiseGenerator);
             Open2dForm("Perlin Noise", perlinNoiseGenerator);
             FractalBrowningMotionSettings settings = new FractalBrowningMotionSettings
