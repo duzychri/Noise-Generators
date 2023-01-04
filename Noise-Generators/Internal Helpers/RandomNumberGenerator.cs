@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace Noise_Generators;
+﻿namespace Noise_Generators;
 
 internal class RandomNumberGenerator
 {
@@ -81,47 +79,46 @@ internal class RandomNumberGenerator
 
     #region Utility Methods
 
-    private static double GetInternalRandomDouble(double value, double mutator, double min, double max)
+    private double GetInternalRandomDouble(double value, double mutator, double min, double max)
     {
-        // Convert input to longs.
-        long longValue = DoubleToLongBits(value);
-        long longMutator = DoubleToLongBits(mutator);
-
-        // Generate a random value with a hash.
-        long result = Hash64shift(longValue * longMutator + 46358090926);
-        value = (double)result / long.MaxValue;
-
+        //// Make value smaller incase of overflows.
+        //value = Sin(value);
+        if (value == 0)
+        { value += 96351.12723f; }
+        // Randomize value based on mutator.
+        value = Fract(Sin(value * mutator) * 16131.75663f);
         // Make sure the value is not negative.
         value = Abs(value);
-
         // Clamp value to the min and max.
         value = value * (max - min) + min;
-
         // Return value.
         return value;
     }
 
-    private static double GetInternalRandomDouble(double2 value, double2 mutator, double min, double max)
+    private double GetInternalRandomDouble(double2 value, double2 mutator, double min, double max)
     {
+        //// Make value smaller incase of overflows.
+        //value = Sin(value);
         // Add value incase of 0 value.
         if (value.x == 0 && value.y == 0)
         { value += new double2(68454.68835f, 33749.34356f); }
         // Randomize value based on mutator.
-        double randomValue = Dot(value, mutator);
-        // Get a random value using a hashing function.
-        long longRandom = DoubleToLongBits(randomValue);
-        longRandom = Hash64shift(longRandom);
-        randomValue = (double)longRandom / long.MaxValue;
+        double random = Dot(value, mutator);
+        random = Sin(random);
+        random = random * 9761.8642f;
+        random = Fract(random);
         // Make sure the value is not negative.
-        randomValue = Abs(randomValue);
+        random = Abs(random);
         // Clamp value to the min and max.
-        randomValue = randomValue * (max - min) + min;
+        random = random * (max - min) + min;
         // Return value.
-        return randomValue;
+        return random;
     }
 
-    private static double GetInternalRandomDouble(double3 value, double3 mutator, double min, double max)
+    private double GetInternalRandomDouble(double3 value, double3 mutator, double min, double max)
     {
+        //// Make value smaller incase of overflows.
+        //value = Sin(value);
         // Add value incase of 0 value.
         if (value.x == 0 && value.y == 0 && value.z == 0)
         { value += new double3(68454.33749f, 68835.34356f, 34356.33749f); }
@@ -133,32 +130,6 @@ internal class RandomNumberGenerator
         random = random * (max - min) + min;
         // Return value.
         return random;
-    }
-
-    // https://gist.github.com/badboy/6267743
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static long Hash64shift(long key)
-    {
-        key = (~key) + (key << 21);
-        key ^= (key >> 24);
-        key = (key + (key << 3)) + (key << 8);
-        key ^= (key >> 14);
-        key = (key + (key << 2)) + (key << 4);
-        key ^= (key >> 28);
-        key += (key << 31);
-        return key;
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static unsafe long DoubleToLongBits(double value)
-    {
-        return *(long*)(&value);
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static unsafe double LongToDoubleBits(long value)
-    {
-        return *(double*)(&value);
     }
 
     #endregion Utility Methods
